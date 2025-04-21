@@ -201,6 +201,12 @@
             text-align: center;
         }
         
+        /* Music Section */
+        .music-section {
+            background: linear-gradient(to bottom, #c1f7dc, #a8e6cf);
+            text-align: center;
+        }
+        
         .gallery-title {
             margin-bottom: 30px;
             color: #333;
@@ -215,6 +221,15 @@
             padding: 20px;
         }
         
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
         .grid-item {
             position: relative;
             overflow: hidden;
@@ -223,6 +238,78 @@
             transition: transform 0.3s ease;
             aspect-ratio: 1/1;
             cursor: pointer;
+        }
+        
+        .song-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .song-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .song-image {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .song-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .song-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(210, 54, 105, 0.8);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .song-image:hover .play-button {
+            opacity: 1;
+        }
+        
+        .play-button i {
+            color: white;
+            font-size: 24px;
+            margin-left: 5px;
+        }
+        
+        .song-title {
+            font-size: 1.2rem;
+            color: #d23669;
+            margin-bottom: 5px;
+        }
+        
+        .song-desc {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
         }
         
         .grid-item:hover {
@@ -335,8 +422,13 @@
                 font-size: 1.5rem;
             }
             
-            .image-grid {
+            .image-grid, .music-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .song-image {
+                height: 150px;
             }
             
             .modal-content {
@@ -345,6 +437,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Cover Page -->
@@ -355,6 +448,7 @@
             <button class="btn" onclick="showSection('birthday')">Birthday Greeting <span class="emoji">🎂</span></button>
             <button class="btn" onclick="showSection('monthsary')">Monthsary Letter <span class="emoji">💌</span></button>
             <button class="btn" onclick="showSection('roblox')">Roblox Memories <span class="emoji">🎮</span></button>
+            <button class="btn" onclick="showSection('music')">Special Songs <span class="emoji">🎵</span></button>
         </div>
     </div>
     
@@ -467,6 +561,67 @@
         </div>
     </div>
     
+    <!-- Music Section -->
+    <div class="section music-section" id="music">
+        <div class="back-btn" onclick="showSection('cover')">←</div>
+        <h1>Special Songs For You <span class="emoji">🎵</span></h1>
+        <p class="subtitle">Click on any song to play <span class="emoji">🎧</span></p>
+        
+        <div class="music-grid">
+            <!-- Song 1 - Feeling Down -->
+            <div class="song-card">
+                <div class="song-image" onclick="playSong('song1', this)">
+                    <img src="love.png" alt="Cheer Up Song">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3 class="song-title">When you're feeling down <span class="emoji">😔</span></h3>
+                <p class="song-desc">"Here's a song to cheer you up"</p>
+                <audio id="song1" src="rainbow.mp3"></audio>
+            </div>
+            
+            <!-- Song 2 - Missing Me -->
+            <div class="song-card">
+                <div class="song-image" onclick="playSong('song2', this)">
+                    <img src="miss me.png" alt="Missing Me Song">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3 class="song-title">When you miss me <span class="emoji">💭</span></h3>
+                <p class="song-desc">"A song that reminds you of us"</p>
+                <audio id="song2" src="with a smile.mp3"></audio>
+            </div>
+            
+            <!-- Song 3 - Love Reminder -->
+            <div class="song-card">
+                <div class="song-image" onclick="playSong('song3', this)">
+                    <img src="love 1.png" alt="Love Reminder Song">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3 class="song-title">To remind you of my love <span class="emoji">💖</span></h3>
+                <p class="song-desc">"How much I love you"</p>
+                <audio id="song3" src="This I Promise You.mp3"></audio>
+            </div>
+            
+            <!-- Song 4 - Calm Down -->
+            <div class="song-card">
+                <div class="song-image" onclick="playSong('song4', this)">
+                    <img src="love 2.png" alt="Calm Down Song">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <h3 class="song-title">When you're overthinking <span class="emoji">🌀</span></h3>
+                <p class="song-desc">"Relax and breathe, my love"</p>
+                <audio id="song4" src="invisible.mp3"></audio>
+            </div>
+        </div>
+    </div>
+    
     <!-- The Modal for Image Zoom -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -474,6 +629,7 @@
     </div>
     
     <script>
+        // Section Navigation
         function showSection(sectionId) {
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
@@ -492,6 +648,9 @@
             // Close any open mails when switching sections
             document.getElementById('birthday-mail')?.classList.remove('open');
             document.getElementById('monthsary-mail')?.classList.remove('open');
+            
+            // Pause any playing song when switching sections
+            pauseAllSongs();
         }
         
         // Close mail when clicking outside
@@ -525,6 +684,52 @@
             const modal = document.getElementById('imageModal');
             if (event.target == modal) {
                 modal.style.display = "none";
+            }
+        }
+        
+        // Music Player Functionality
+        let currentlyPlaying = null;
+        let currentlyPlayingElement = null;
+        
+        function playSong(songId, element) {
+            const song = document.getElementById(songId);
+            
+            // If this song is already playing, pause it
+            if (currentlyPlaying === song) {
+                song.pause();
+                currentlyPlaying = null;
+                currentlyPlayingElement = null;
+                element.querySelector('.play-button i').className = 'fas fa-play';
+                return;
+            }
+            
+            // Pause any currently playing song
+            pauseAllSongs();
+            
+            // Play the new song
+            song.play();
+            currentlyPlaying = song;
+            currentlyPlayingElement = element;
+            
+            // Update play button icon
+            element.querySelector('.play-button i').className = 'fas fa-pause';
+            
+            // When song ends, reset state
+            song.onended = function() {
+                currentlyPlaying = null;
+                currentlyPlayingElement = null;
+                element.querySelector('.play-button i').className = 'fas fa-play';
+            };
+        }
+        
+        function pauseAllSongs() {
+            if (currentlyPlaying) {
+                currentlyPlaying.pause();
+                if (currentlyPlayingElement) {
+                    currentlyPlayingElement.querySelector('.play-button i').className = 'fas fa-play';
+                }
+                currentlyPlaying = null;
+                currentlyPlayingElement = null;
             }
         }
     </script>
