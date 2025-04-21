@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #fff5f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Cover Page */
+        .cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .cover-content {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #d23669;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Brush Script MT', cursive;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background-color: #d23669;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            background-color: #a52a52;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Sections - Hidden Initially */
+        .section {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 20px;
+            position: relative;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Interactive Mail Styles - FIXED VERSION */
+        .mail-container {
+            margin: 50px auto;
+            perspective: 1000px;
+            max-width: 600px;
+        }
+        
+        .mail {
+            width: 100%;
+            height: 300px;
+            background: #fff;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .mail.open {
+            transform: rotateX(180deg) translateY(-50px);
+            height: 700px; /* Increased height to prevent cut-off */
+        }
+        
+        .mail-front, .mail-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 40px; /* Increased padding */
+        }
+        
+        .mail-front {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mail-front .emoji {
+            font-size: 2.5rem;
+            margin-top: 15px;
+        }
+        
+        .mail-back {
+            background: white;
+            transform: rotateX(180deg);
+            text-align: left;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+        
+        .mail-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            width: 100%;
+            padding: 10px;
+        }
+        
+        .mail-content p {
+            margin-bottom: 15px;
+        }
+        
+        /* Birthday Section */
+        .birthday-section {
+            text-align: center;
+            background: linear-gradient(to bottom, #ffcce6, #ffb3d9);
+        }
+        
+        /* Monthsary Section */
+        .monthsary-section {
+            background: linear-gradient(to bottom, #d4b8ff, #c9a3ff);
+            text-align: center;
+        }
+        
+        /* Roblox Pictures Section with Zoom */
+        .roblox-section {
+            background: linear-gradient(to bottom, #a8edea, #fed6e3);
+            text-align: center;
+        }
+        
+        .gallery-title {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            aspect-ratio: 1/1;
+            cursor: pointer;
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        /* Image Zoom Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        /* Emoji Styles */
+        .emoji {
+            font-size: 1.2em;
+            vertical-align: middle;
+            margin: 0 3px;
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .heartbeat {
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .mail {
+                height: 250px;
+            }
+            
+            .mail.open {
+                height: 600px;
+            }
+            
+            .mail-front, .mail-back {
+                padding: 25px;
+            }
+            
+            .mail-front {
+                font-size: 1.5rem;
+            }
+            
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover active" id="cover">
+        <div class="cover-content floating">
+            <h1>For My Love <span class="emoji heartbeat">❤️</span></h1>
+            <p class="subtitle">A special collection of memories and moments <span class="emoji">✨</span></p>
+            <button class="btn" onclick="showSection('birthday')">Birthday Greeting <span class="emoji">🎂</span></button>
+            <button class="btn" onclick="showSection('monthsary')">Monthsary Letter <span class="emoji">💌</span></button>
+            <button class="btn" onclick="showSection('roblox')">Roblox Memories <span class="emoji">🎮</span></button>
+        </div>
+    </div>
+    
+    <!-- Birthday Section with Interactive Mail -->
+    <div class="section birthday-section" id="birthday">
+        <div class="back-btn" onclick="showSection('cover')">←</div>
+        <h1>Happy Birthday My Love! <span class="emoji">🎉</span></h1>
+        <p class="subtitle">Click on the mail to open your special message <span class="emoji">👇</span></p>
+        
+        <div class="mail-container">
+            <div class="mail" id="birthday-mail" onclick="this.classList.toggle('open')">
+                <div class="mail-front">
+                    Special Birthday Message
+                    <span class="emoji">💝</span>
+                </div>
+                <div class="mail-back">
+                    <div class="mail-content">
+                        <p><strong>Happy Birthday to my love, my baby, my bebu, my wife, and the most beautiful of all Andrei!</strong> <span class="emoji">💖</span></p>
+                        
+                        <p>I want to wish you the happiest birthday and the best of health. May all your dreams and desires come true. God knows how happy I am because of you. You made me feel the kind of love I've always longed for, and I truly appreciate you for constantly reminding me of my worth.</p>
+                        
+                        <p>Sana lagi kang masaya, love, because you deserve nothing but happiness. Mahal na mahal kita, Andrei sobra pa sa sobra. Gusto ko rin humingi ng sorry kung minsan napagbubuntungan kita ng inis, lalo na kapag frustrated ako sa game o sa schoolwork ko. You've been so patient and understanding, and that means everything to me.</p>
+                        
+                        <p>Kahit mahigit isang buwan pa lang tayong magkasama, ramdam na ramdam ko na ikaw na talaga. Mahal na mahal na kita, and I can already see myself marrying you someday.</p>
+                        
+                        <p>Enjoy your special day, my naughty namu! Always remember that I'm just here loving you, supporting you, and waiting for the day we can finally see each other in person. I can't wait for that moment. Happy birthday ulit, my baby, my everything.</p>
+                        
+                        <p>From your baby bear and handsome husband, XOXO mwaaaa <span class="emoji">🐻💋</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Monthsary Section with Interactive Mail -->
+    <div class="section monthsary-section" id="monthsary">
+        <div class="back-btn" onclick="showSection('cover')">←</div>
+        <h1>Our Monthsary <span class="emoji">💑</span></h1>
+        <p class="subtitle">Click on the mail to open your letter <span class="emoji">👇</span></p>
+        
+        <div class="mail-container">
+            <div class="mail" id="monthsary-mail" onclick="this.classList.toggle('open')">
+                <div class="mail-front">
+                    Monthsary Letter
+                    <span class="emoji">💌</span>
+                </div>
+                <div class="mail-back">
+                    <div class="mail-content">
+                        <p>To the love of my life, Andrei <span class="emoji">💞</span>,</p>
+                        
+                        <p><strong>TO MY BABY PANDA,</strong><br>
+                        Love Moves in Mysterious Ways by Nina I used to hear that song a lot when I was young Back then, I didn't understand what it means. But now, after meeting you, I finally do. Love really does move in unexpected and magical ways</p>
+                        
+                        <p>Who would've thought that one simple message from you would be the start of something so beautiful? I never expected to fall in love like this, but I'm so glad I did. You came into my life at the right moment, and every day since then has been special because of you. you know may pass relationships, and you also know my story</p>
+                        
+                        <p>There are no perfect words to fully express how much I love you. My heart is full of love and care for you, and I want you to know that I'm truly thankful for everything you do.</p>
+                        
+                        <p>If I had to, I'd do anything to protect you, even if it means i had to sacrifice my own comfort or happiness. That's how much you mean to me. You're worth everything. I'll be your biggest fan, your comfort, your home. Always and forever.</p>
+                        
+                        <p>Happy 1st monthsary, my love, babe, baby, wife. I'm excited to spend more months and years with you, growing and learning together. I love you, my baby panda. So much.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Roblox Pictures Section with Zoom -->
+    <div class="section roblox-section" id="roblox">
+        <div class="back-btn" onclick="showSection('cover')">←</div>
+        <h1>Our Roblox Memories <span class="emoji">🎮</span></h1>
+        <p class="subtitle">Click on any picture to zoom <span class="emoji">👆</span></p>
+        
+        <div class="image-grid">
+            <div class="grid-item" onclick="openModal('aurora.png')">
+                <img src="aurora.png" alt="Aurora Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('hello kity 1.png')">
+                <img src="hello kity 1.png" alt="Hello Kitty Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('date 1.png')">
+                <img src="date 1.png" alt="Date Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('piggy-back 1.png')">
+                <img src="piggy back 1.png" alt="Piggy Back Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('play 1.png')">
+                <img src="play 1.png" alt="Play Time Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('kiss.png')">
+                <img src="kiss.png" alt="Kiss Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('DTI.png')">
+                <img src="DTI.png" alt="DTI Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('ratw.png')">
+                <img src="ratw.png" alt="Rainbow Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('mcq.png')">
+                <img src="mcq.png" alt="MCQ Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('everest.png')">
+                <img src="everest.png" alt="Everest Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('match.png')">
+                <img src="match.png" alt="Matching Memory">
+            </div>
+            <div class="grid-item" onclick="openModal('winner.png')">
+                <img src="winner.png" alt="Winner Memory">
+            </div>
+        </div>
+    </div>
+    
+    <!-- The Modal for Image Zoom -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Hide cover
+            document.getElementById('cover').classList.remove('active');
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Close any open mails when switching sections
+            document.getElementById('birthday-mail')?.classList.remove('open');
+            document.getElementById('monthsary-mail')?.classList.remove('open');
+        }
+        
+        // Close mail when clicking outside
+        document.addEventListener('click', function(event) {
+            const birthdayMail = document.getElementById('birthday-mail');
+            const monthsaryMail = document.getElementById('monthsary-mail');
+            
+            if (!event.target.closest('.mail') && birthdayMail?.classList.contains('open')) {
+                birthdayMail.classList.remove('open');
+            }
+            
+            if (!event.target.closest('.mail') && monthsaryMail?.classList.contains('open')) {
+                monthsaryMail.classList.remove('open');
+            }
+        });
+        
+        // Image Zoom Functionality
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('zoomedImage');
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
