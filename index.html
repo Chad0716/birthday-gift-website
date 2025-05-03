@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For The Love of My Life </title>
+    <title>For My Love</title>
     <style>
         /* Global Styles */
         * {
@@ -205,6 +205,55 @@
         .music-section {
             background: linear-gradient(to bottom, #c1f7dc, #a8e6cf);
             text-align: center;
+        }
+        
+        /* Psychology Section */
+        .psychology-section {
+            background: linear-gradient(to bottom, #f5d0ff, #e8b1ff);
+            text-align: center;
+        }
+        
+        .psychology-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .psychology-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            transition: all 0.3s ease;
+        }
+        
+        .psychology-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .compliment-box, .affirmation-box {
+            min-height: 150px;
+            background: #fff9fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #f0d0e0;
+        }
+        
+        .bias-explanation, .principle-explanation {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
         }
         
         .gallery-title {
@@ -435,6 +484,14 @@
                 max-width: 95%;
                 max-height: 95%;
             }
+            
+            .psychology-container {
+                flex-direction: column;
+            }
+            
+            .psychology-card {
+                max-width: 100%;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -443,12 +500,13 @@
     <!-- Cover Page -->
     <div class="cover active" id="cover">
         <div class="cover-content floating">
-            <h1>For My Love, Namu <span class="emoji heartbeat">❤️</span></h1>
-            <p class="subtitle">A special gift for you, collection of our memories and moments <span class="emoji">✨</span></p>
+            <h1>For My Love <span class="emoji heartbeat">❤️</span></h1>
+            <p class="subtitle">A special collection of memories and moments <span class="emoji">✨</span></p>
             <button class="btn" onclick="showSection('birthday')">Birthday Greeting <span class="emoji">🎂</span></button>
             <button class="btn" onclick="showSection('monthsary')">Monthsary Letter <span class="emoji">💌</span></button>
             <button class="btn" onclick="showSection('roblox')">Roblox Memories <span class="emoji">🎮</span></button>
             <button class="btn" onclick="showSection('music')">Special Songs <span class="emoji">🎵</span></button>
+            <button class="btn" onclick="showSection('psychology')">Psychology of Us <span class="emoji">🧠</span></button>
         </div>
     </div>
     
@@ -622,6 +680,36 @@
         </div>
     </div>
     
+    <!-- Psychology Section -->
+    <div class="section psychology-section" id="psychology">
+        <div class="back-btn" onclick="showSection('cover')">←</div>
+        <h1>Psychology of Our Love <span class="emoji">🧠💖</span></h1>
+        
+        <div class="psychology-container">
+            <!-- Compliment Generator -->
+            <div class="psychology-card">
+                <h2>Cognitive Bias Compliments <span class="emoji">💐</span></h2>
+                <p class="subtitle">Scientific reasons why you're amazing!</p>
+                <div class="compliment-box">
+                    <p id="compliment-text">Click the button to receive a psychology-based compliment!</p>
+                    <p id="bias-explanation" class="bias-explanation"></p>
+                </div>
+                <button class="btn" onclick="generateCompliment()">Give Me a Compliment</button>
+            </div>
+            
+            <!-- Affirmation Generator -->
+            <div class="psychology-card">
+                <h2>Personalized Affirmations <span class="emoji">✨</span></h2>
+                <p class="subtitle">Daily reminders of your worth</p>
+                <div class="affirmation-box">
+                    <p id="affirmation-text">Click below for your daily affirmation!</p>
+                    <p id="psychology-principle" class="principle-explanation"></p>
+                </div>
+                <button class="btn" onclick="generateAffirmation()">Give Me an Affirmation</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- The Modal for Image Zoom -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -731,6 +819,76 @@
                 currentlyPlaying = null;
                 currentlyPlayingElement = null;
             }
+        }
+        
+        // Psychology-based Compliment Generator
+        const compliments = [
+            {
+                text: "The Halo Effect makes me see everything about you as perfect, because your beautiful soul shines through in everything you do.",
+                explanation: "The Halo Effect is a cognitive bias where our overall impression of a person influences how we feel about their character."
+            },
+            {
+                text: "My Confirmation Bias means I constantly notice all the wonderful things about you, because you've set such a high standard for what love should be.",
+                explanation: "Confirmation Bias is our tendency to search for and favor information that confirms our preexisting beliefs."
+            },
+            {
+                text: "You trigger my Peak-End Rule, where I remember the most intense and recent moments with you the most - and they're all amazing.",
+                explanation: "The Peak-End Rule suggests we judge experiences based on how they were at their peak and at their end, rather than as a whole."
+            },
+            {
+                text: "You're my Cognitive Dissonance, because even when I try to be mad at you, my brain can't reconcile that with how much I adore you.",
+                explanation: "Cognitive Dissonance is the mental discomfort experienced when holding two conflicting beliefs or values."
+            },
+            {
+                text: "You're my Mere Exposure Effect - the more time I spend with you, the more I love and appreciate you.",
+                explanation: "The Mere Exposure Effect is our tendency to develop a preference for things simply because we're familiar with them."
+            },
+            {
+                text: "You're my Positive Illusory Bias - I may be overly optimistic about us, but that's because you make everything seem possible.",
+                explanation: "Positive Illusory Bias is our tendency to overestimate our abilities or the positivity of a situation."
+            }
+        ];
+        
+        // Psychology-based Affirmations
+        const affirmations = [
+            {
+                text: "You are worthy of love exactly as you are - your imperfections make you perfectly you.",
+                principle: "Based on Unconditional Positive Regard from Humanistic Psychology"
+            },
+            {
+                text: "Your thoughts don't define your reality - you have the power to challenge negative thinking patterns.",
+                principle: "Inspired by Cognitive Behavioral Therapy (CBT) techniques"
+            },
+            {
+                text: "Today, focus on small moments of joy - they're the building blocks of happiness.",
+                principle: "Rooted in Positive Psychology's emphasis on savoring positive experiences"
+            },
+            {
+                text: "You are not your mistakes. Every day is a new opportunity to grow and learn.",
+                principle: "Based on the concept of Neuroplasticity - our brain's ability to change"
+            },
+            {
+                text: "Your feelings are valid, but they are not facts. You can observe them without being ruled by them.",
+                principle: "From Mindfulness-Based Cognitive Therapy (MBCT)"
+            },
+            {
+                text: "You contain multitudes - it's okay to feel conflicting emotions at the same time.",
+                principle: "Inspired by Dialectical Behavior Therapy (DBT) principles"
+            }
+        ];
+        
+        function generateCompliment() {
+            const randomIndex = Math.floor(Math.random() * compliments.length);
+            const compliment = compliments[randomIndex];
+            document.getElementById('compliment-text').textContent = compliment.text;
+            document.getElementById('bias-explanation').textContent = compliment.explanation;
+        }
+        
+        function generateAffirmation() {
+            const randomIndex = Math.floor(Math.random() * affirmations.length);
+            const affirmation = affirmations[randomIndex];
+            document.getElementById('affirmation-text').textContent = affirmation.text;
+            document.getElementById('psychology-principle').textContent = affirmation.principle;
         }
     </script>
 </body>
